@@ -9,9 +9,9 @@ if sys.version_info.major == 3 and sys.version_info.minor < 3:
     print("Unfortunately, your python version is not supported!\n Please upgrade at least to python 3.3!")
     sys.exit(1)
 
-if sys.platform == 'darwin' or sys.platform == 'win32':
-    print("Unfortunately, we do not support your platform %s" % sys.platform)
-    sys.exit(1)
+#if sys.platform == 'darwin' or sys.platform == 'win32':
+#    print("Unfortunately, we do not support your platform %s" % sys.platform)
+#    sys.exit(1)
 
 install_requires = [
     'androguard==4.1.1',
