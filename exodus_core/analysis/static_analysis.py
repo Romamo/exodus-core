@@ -158,7 +158,10 @@ class StaticAnalysis:
         Load the APK file.
         """
         if self.apk is None:
-            self.apk = APK(self.apk_path)
+            if isinstance(self.apk_path, str):
+                self.apk = APK(self.apk_path)
+            else:
+                self.apk = APK(self.apk_path.getvalue(), raw=True)
 
     @staticmethod
     def _get_embedded_classes(apkfile, depth=0):
