@@ -211,6 +211,24 @@ class StaticAnalysis:
 
         return self.classes
 
+    def clean_embedded_classes(self):
+        """
+        Clean the list
+        """
+        classes = []
+        for c in self.classes:
+            # Cut the first 3 parts of the path
+            a = c.split('/', 3)[0:3]
+            if a[0] in ['java', 'android']:
+                continue
+            a = '/'.join(a)
+            if a in classes:
+                continue
+            if a.endswith('Exception'):
+                continue
+            classes.append(a)
+        self.classes = classes
+
     def detect_trackers_in_list(self, class_list):
         """
         Detect embedded trackers in the provided classes list.
