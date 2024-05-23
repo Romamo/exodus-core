@@ -219,9 +219,15 @@ class StaticAnalysis:
         """
         classes = []
         for c in self.classes:
+            if len(c) <= 5:
+                # Remove obfuscated classes
+                continue
             # Cut the first 3 parts of the path
             a = c.split('/', 3)[0:3]
-            if a[0] in ['java', 'android']:
+            if len(a[-1]) < 3:
+                # Remove obfuscated classes
+                continue
+            if a[0] in ['java', 'android', 'androidx']:
                 continue
             a = '/'.join(a)
             if a in classes:
