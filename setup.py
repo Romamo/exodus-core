@@ -14,7 +14,7 @@ if sys.version_info.major == 3 and sys.version_info.minor < 3:
 #    sys.exit(1)
 
 install_requires = [
-    'androguard==4.1',
+    'androguard==4.0.1',
     'cryptography==38.0.1',
     'dhash==1.4',
     'jellyfish==0.5.6',
