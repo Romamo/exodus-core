@@ -201,13 +201,15 @@ class StaticAnalysis:
 
         return classes
 
-    def get_embedded_classes(self):
+    def get_embedded_classes(self, clean=False):
         """
         Get the list of Java classes embedded into all DEX files.
         :return: array of Java classes names as string
         """
         if self.classes is None:
             self.classes = list(self._get_embedded_classes(self.apk_path))
+            if clean:
+                self.clean_embedded_classes()
 
         return self.classes
 
