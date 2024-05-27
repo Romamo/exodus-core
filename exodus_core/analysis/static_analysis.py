@@ -116,7 +116,7 @@ class Certificate:
 
 
 class StaticAnalysis:
-    def __init__(self, apk_path=None):
+    def __init__(self, apk_path=None, exodus_url="https://reports.exodus-privacy.eu.org/api/trackers"):
         self.apk = None
         self.apk_path = apk_path
         self.signatures = None
@@ -125,6 +125,7 @@ class StaticAnalysis:
         self.app_details = None
         if apk_path is not None:
             self.load_apk()
+        self.exodus_url = exodus_url
 
     def _compile_signatures(self):
         """
@@ -145,8 +146,7 @@ class StaticAnalysis:
         :return: a dictionary containing signatures.
         """
         self.signatures = []
-        exodus_url = "https://reports.exodus-privacy.eu.org/api/trackers"
-        r = requests.get(exodus_url)
+        r = requests.get(self.exodus_url)
         data = r.json()
         for e in data['trackers']:
             self.signatures.append(namedtuple('tracker', data['trackers'][e].keys())(*data['trackers'][e].values()))
