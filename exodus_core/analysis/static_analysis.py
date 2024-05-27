@@ -222,14 +222,19 @@ class StaticAnalysis:
             if len(c) <= 5:
                 # Remove obfuscated classes
                 continue
-            # Cut the first 3 parts of the path
-            a = c.split('/', 3)[0:3]
+            if c[0] == '_':
+                continue
+            # Cut the first 3 parts of the path and keep last dot for more
+            a = c.split('/', 4)
             if len(a[-1]) < 3:
                 # Remove obfuscated classes
                 continue
-            if a[0] in ['java', 'android', 'androidx']:
+            if a[0] in ['java', 'javax', 'android', 'androidx', 'kotlin', 'kotlinx', 'okhttp3', 'dagger', 'okio']:
                 continue
-            a = '/'.join(a)
+            if len(a) < 4:
+                a = '/'.join(a[0:3])
+            else:
+                a = '/'.join(a[0:3]) + '/'
             if a in classes:
                 continue
             if a.endswith('Exception'):
