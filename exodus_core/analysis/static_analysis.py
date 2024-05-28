@@ -196,7 +196,7 @@ class StaticAnalysis:
 
                         apk_zip.extract(info, tmp_dir)
                         try:
-                            run = subprocess.check_output(['dexdump', f'{tmp_dir}/{info.filename}'])
+                            run = subprocess.check_output(['dexdump', f'{tmp_dir}/{info.filename}'], stderr=subprocess.STDOUT)
                         except subprocess.CalledProcessError as ex:
                             logging.error(f'Unable to extract classes from {apkfile}')
                             raise ExtractionError('Unable to extract classes from the APK') from ex
