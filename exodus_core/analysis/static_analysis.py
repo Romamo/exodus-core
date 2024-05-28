@@ -19,6 +19,8 @@ from androguard.util import set_log
 from cryptography.x509.name import ObjectIdentifier, _NAMEOID_DEFAULT_TYPE, _ASN1Type, NameAttribute
 from PIL import Image
 
+from exodus_core.exceptions import ExtractionError
+
 PHASH_SIZE = 8
 
 set_log("INFO")
@@ -197,11 +199,11 @@ class StaticAnalysis:
                             run = subprocess.check_output(['dexdump', f'{tmp_dir}/{info.filename}'])
                         except subprocess.CalledProcessError as ex:
                             logging.error(f'Unable to extract classes from {apkfile}')
-                            raise Exception('Unable to extract classes from the APK') from ex
+                            raise ExtractionError('Unable to extract classes from the APK') from ex
                         classes = classes.union(set(re.findall(r'[A-Z]+((?:\w+\/)+\w+)', run.decode(errors='ignore'))))
         except zipfile.BadZipFile as ex:
             logging.error(f'Unable to decode {apkfile}')
-            raise Exception('Unable to decode the APK') from ex
+            raise ExtractionError('Unable to decode the APK') from ex
 
         return classes
 
