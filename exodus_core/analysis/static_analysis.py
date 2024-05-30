@@ -225,27 +225,18 @@ class StaticAnalysis:
         """
         classes = []
         for c in self.classes:
-            if len(c) <= 5:
-                # Remove obfuscated classes
-                continue
-            if c[0] == '_':
+            # Remove obfuscated classes
+            if len(c) <= 5 or c[0] == '_':
                 continue
             # Cut the first 3 parts of the path and keep last dot for more
-            a = c.split('/', 6)
-            if len(a[-1]) <= 2 or len(a[0]) <= 1:
+            a = c.split('/', 5)
+            if len(a[-1]) <= 2 or len(a[0]) <= 1 or len(a[0]) > 12 or len(a[1]) > 20 or \
+                    a[0] in ['java', 'javax', 'android', 'androidx', 'kotlin', 'kotlinx', 'okhttp3', 'dagger', 'okio']:
                 # Remove obfuscated classes
                 continue
-            if a[0] in ['java', 'javax', 'android', 'androidx', 'kotlin', 'kotlinx', 'okhttp3', 'dagger', 'okio']:
-                continue
-            if len(a) < 6:
-                a = '/'.join(a[0:5])
-            else:
-                a = '/'.join(a[0:5]) + '/'
-            if a in classes:
-                continue
-            if a.endswith('Exception'):
-                continue
-            classes.append(a)
+            a = '/'.join(a[0:-1 if len(a) < 5 else 4]) + '/'
+            if a not in classes:
+                classes.append(a)
         self.classes = classes
 
     def detect_trackers_in_list(self, class_list):
