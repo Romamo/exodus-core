@@ -200,6 +200,8 @@ class StaticAnalysis:
                         except subprocess.CalledProcessError as ex:
                             logging.error(f'Unable to extract classes from {apkfile}')
                             raise ExtractionError('Unable to extract classes from the APK') from ex
+                        # Clean the output to keep only the class names
+                        run = b"\n".join(filter(lambda p: len(p) < 1000 and b'/' in p, run.split(b"\n")))
                         classes = classes.union(set(re.findall(r'[A-Z]+((?:\w+\/)+\w+)', run.decode(errors='ignore'))))
         except zipfile.BadZipFile as ex:
             logging.error(f'Unable to decode {apkfile}')
