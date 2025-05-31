@@ -18,7 +18,7 @@ install_requires = [
     'cryptography==38.0.1',
     'dhash==1.4',
     'jellyfish==0.5.6',
-    'Pillow==9.5.0',
+    'Pillow==10.3.0',
     'requests>=2.23,<2.32',
     'six==1.15.0',
     'traitlets==4.3.2'
@@ -26,7 +26,7 @@ install_requires = [
 
 setup(
     name='exodus_core',
-    version='1.3.12.7',
+    version='1.3.12.8',
     description='Core functionality of εxodus',
     author='Exodus Privacy',
     author_email='contact@exodus-privacy.eu.org',
