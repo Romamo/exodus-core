@@ -9,24 +9,24 @@ if sys.version_info.major == 3 and sys.version_info.minor < 3:
     print("Unfortunately, your python version is not supported!\n Please upgrade at least to python 3.3!")
     sys.exit(1)
 
-#if sys.platform == 'darwin' or sys.platform == 'win32':
-#    print("Unfortunately, we do not support your platform %s" % sys.platform)
-#    sys.exit(1)
+if sys.platform == 'darwin' or sys.platform == 'win32':
+    print("Unfortunately, we do not support your platform %s" % sys.platform)
+    sys.exit(1)
 
 install_requires = [
-    'androguard==4.0.1',
-    'cryptography==38.0.1',
+    'androguard==4.1.1',
+    'cryptography==50.0.0',
     'dhash==1.4',
     'jellyfish==0.5.6',
-    'Pillow',
-    'requests>=2.23,<2.32',
+    'Pillow==12.3.0',
+    'requests>=2.26,<2.34',
     'six==1.15.0',
     'traitlets==4.3.2'
 ]
 
 setup(
     name='exodus_core',
-    version='1.3.12.9',
+    version='1.3.15',
     description='Core functionality of εxodus',
     author='Exodus Privacy',
     author_email='contact@exodus-privacy.eu.org',
