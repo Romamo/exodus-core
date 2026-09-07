@@ -142,18 +142,24 @@ class StaticAnalysis:
         except TypeError:
             print("self.signatures is not iterable")
 
+    def load_trackers_signatures_from_data(self, data):
+        """
+        Load trackers signatures from an already-fetched Exodus database payload.
+        :param data: the parsed ``/api/trackers`` response (a dict with a ``trackers`` key)
+        """
+        self.signatures = []
+        for e in data['trackers']:
+            self.signatures.append(namedtuple('tracker', data['trackers'][e].keys())(*data['trackers'][e].values()))
+        self._compile_signatures()
+        logging.debug('{} trackers signatures loaded'.format(len(self.signatures)))
+
     def load_trackers_signatures(self):
         """
         Load trackers signatures from the official Exodus database.
         :return: a dictionary containing signatures.
         """
-        self.signatures = []
         r = requests.get(self.exodus_url)
-        data = r.json()
-        for e in data['trackers']:
-            self.signatures.append(namedtuple('tracker', data['trackers'][e].keys())(*data['trackers'][e].values()))
-        self._compile_signatures()
-        logging.debug('{} trackers signatures loaded'.format(len(self.signatures)))
+        self.load_trackers_signatures_from_data(r.json())
 
     def load_apk(self):
         """

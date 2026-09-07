@@ -1,3 +1,5 @@
+import json
+import os
 import unittest
 
 from exodus_core.analysis.static_analysis import StaticAnalysis
@@ -7,6 +9,16 @@ import logging
 logging.disable(logging.CRITICAL)
 
 PHASH_SIZE = 16
+
+# Frozen snapshot of the Exodus trackers database so the suite never hits the
+# network. Refresh it from https://reports.exodus-privacy.eu.org/api/trackers
+# when the expected tracker counts below need updating.
+TRACKERS_FIXTURE = os.path.join(os.path.dirname(__file__), 'resources', 'trackers.json')
+
+
+def load_signatures(sa):
+    with open(TRACKERS_FIXTURE, encoding='utf-8') as f:
+        sa.load_trackers_signatures_from_data(json.load(f))
 
 
 def phash(apk):
@@ -26,19 +38,19 @@ def icon_path(apk):
 
 def list_classes(apk):
     sa = StaticAnalysis(apk)
-    sa.load_trackers_signatures()
+    load_signatures(sa)
     return sa.get_embedded_classes()
 
 
 def list_trackers(apk):
     sa = StaticAnalysis(apk)
-    sa.load_trackers_signatures()
+    load_signatures(sa)
     return sa.detect_trackers()
 
 
 def version_code(apk):
     sa = StaticAnalysis(apk)
-    sa.load_trackers_signatures()
+    load_signatures(sa)
     return sa.get_version_code()
 
 
@@ -46,7 +58,7 @@ class TestExodus(unittest.TestCase):
 
     def test_trackers_list(self):
         sa = StaticAnalysis()
-        sa.load_trackers_signatures()
+        load_signatures(sa)
         self.assertIsNotNone(sa.signatures)
         self.assertGreater(len(sa.signatures), 70)
 
