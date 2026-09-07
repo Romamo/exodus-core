@@ -21,7 +21,7 @@ install_requires = [
     'Pillow==12.3.0',
     'requests>=2.26,<2.34',
     'six==1.15.0',
-    'traitlets==4.3.2'
+    'traitlets==5.16.1'
 ]
 
 setup(
