@@ -10,8 +10,8 @@ if sys.version_info.major == 3 and sys.version_info.minor < 3:
     sys.exit(1)
 
 if sys.platform == 'darwin' or sys.platform == 'win32':
-    print("Unfortunately, we do not support your platform %s" % sys.platform)
-    sys.exit(1)
+    print("Warning: %s is not an officially supported platform; some analysis "
+          "features may not work at runtime." % sys.platform, file=sys.stderr)
 
 install_requires = [
     'androguard==4.1.4',
