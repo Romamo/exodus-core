@@ -14,7 +14,7 @@ if sys.platform == 'darwin' or sys.platform == 'win32':
     sys.exit(1)
 
 install_requires = [
-    'androguard==4.1.1',
+    'androguard==4.1.4',
     'cryptography==50.0.0',
     'dhash==1.4',
     'jellyfish==1.2.1',
