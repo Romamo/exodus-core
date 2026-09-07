@@ -49,16 +49,16 @@ class ApkSignature:
             'mra': jellyfish.match_rating_comparison(self.app_name.replace(' ', ''),
                                                      candidate.app_name.replace(' ', '')),
             # String distance
-            'jaro': jellyfish.jaro_winkler(self.app_name, candidate.app_name),
+            'jaro': jellyfish.jaro_winkler_similarity(self.app_name, candidate.app_name),
         }
 
     def get_handle_similarity(self, candidate):
         import jellyfish
-        return jellyfish.jaro_winkler(self.handle, candidate.handle)
+        return jellyfish.jaro_winkler_similarity(self.handle, candidate.handle)
 
     def get_version_name_similarity(self, candidate):
         import jellyfish
-        return jellyfish.jaro_winkler(self.version_name, candidate.version_name)
+        return jellyfish.jaro_winkler_similarity(self.version_name, candidate.version_name)
 
     def compare(self, candidate):
         is_same_handle = self.handle == candidate.handle

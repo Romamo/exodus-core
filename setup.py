@@ -17,7 +17,7 @@ install_requires = [
     'androguard==4.1.1',
     'cryptography==50.0.0',
     'dhash==1.4',
-    'jellyfish==0.5.6',
+    'jellyfish==1.2.1',
     'Pillow==12.3.0',
     'requests>=2.26,<2.34',
     'six==1.15.0',
